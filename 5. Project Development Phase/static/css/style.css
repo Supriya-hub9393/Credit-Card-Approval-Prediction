@@ -1,0 +1,205 @@
+:root {
+    --st-bg: #0e1117;
+    --st-sidebar: #262730;
+    --st-card: #1a1c24;
+    --st-text: #fafafa;
+    --st-text-muted: #808495;
+    --st-accent: #ff4b4b;
+    --st-border: #31333f;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: var(--st-bg);
+    color: var(--st-text);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    min-height: 100vh;
+    line-height: 1.6;
+}
+
+/* Streamlit Flat Dashboard Left Sidebar Box */
+.sidebar {
+    width: 320px; /* Enhanced roomy side canvas */
+    background-color: var(--st-sidebar);
+    padding: 2.5rem 1.5rem;
+    border-right: 1px solid var(--st-border);
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    box-sizing: border-box;
+}
+
+.sidebar-header h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0 0 0.5rem 0;
+    color: var(--st-text);
+    letter-spacing: -0.02rem;
+    line-height: 1.3;
+}
+
+.sidebar-desc {
+    font-size: 0.9rem;
+    color: var(--st-text-muted);
+    margin-top: 0.5rem;
+    margin-bottom: 2rem;
+    line-height: 1.5;
+}
+
+.sidebar-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.menu-title {
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--st-text-muted);
+    letter-spacing: 0.05rem;
+    margin-bottom: 0.5rem;
+}
+
+.active-nav {
+    color: var(--st-text);
+    text-decoration: none;
+    background-color: rgba(255, 255, 255, 0.04);
+    padding: 0.6rem 0.8rem;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    border-left: 4px solid var(--st-accent);
+}
+
+.inactive-nav {
+    color: var(--st-text-muted);
+    text-decoration: none;
+    padding: 0.6rem 0.8rem;
+    font-size: 0.95rem;
+    border-left: 4px solid transparent;
+    transition: color 0.15s;
+}
+
+.inactive-nav:hover {
+    color: var(--st-text);
+}
+
+.sidebar-info {
+    margin-top: auto;
+    color: var(--st-text-muted);
+    font-size: 0.85rem;
+    line-height: 1.5;
+}
+
+/* Wide Main Content Body Styling Panels */
+.main-content {
+    flex: 1;
+    padding: 3rem 4rem;
+    max-width: 950px;
+    box-sizing: border-box;
+}
+
+.section-block {
+    margin-bottom: 2.5rem;
+}
+
+.section-title {
+    color: var(--st-text);
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid var(--st-border);
+    padding-bottom: 0.4rem;
+}
+
+/* Spacious Two-Column Grid Setup Layout */
+.input-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 3.5rem;
+    row-gap: 1.75rem;
+}
+
+@media(max-width: 960px) {
+    body { flex-direction: column; }
+    .sidebar { width: 100%; }
+    .main-content { padding: 2rem; }
+    .input-grid { grid-template-columns: 1fr; }
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.input-group label {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--st-text);
+    margin-bottom: 0.5rem;
+}
+
+.input-group input, .input-group select {
+    background-color: var(--st-card);
+    color: var(--st-text);
+    border: 1px solid var(--st-border);
+    padding: 0.75rem 1rem;
+    border-radius: 6px;
+    font-size: 1rem;
+    outline: none;
+    font-family: inherit;
+}
+
+.input-group input:focus, .input-group select:focus {
+    border-color: var(--st-accent);
+}
+
+.button-container {
+    margin-top: 3.5rem;
+    border-top: 1px solid var(--st-border);
+    padding-top: 2rem;
+}
+
+.st-button {
+    background-color: transparent;
+    color: var(--st-text);
+    border: 1px solid var(--st-border);
+    padding: 0.5rem 1.25rem;
+    font-size: 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: border-color 0.15s, color 0.15s;
+}
+
+.st-button:hover {
+    border-color: var(--st-accent);
+    color: var(--st-accent);
+}
+
+.result-banner {
+    padding: 1.5rem;
+    border-radius: 6px;
+    font-weight: 500;
+    font-size: 1.15rem;
+    margin-bottom: 2.5rem;
+    border: 1px solid transparent;
+}
+
+.result-banner p { margin: 0; }
+
+.result-banner.success {
+    background-color: rgba(16, 185, 129, 0.12);
+    border-color: #10b981;
+    color: #a7f3d0;
+}
+
+.result-banner.danger {
+    background-color: rgba(239, 68, 68, 0.12);
+    border-color: #ef4444;
+    color: #fca5a5;
+}
