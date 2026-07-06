@@ -22,56 +22,94 @@
         {% if prediction_text %}<div class="result-banner {{ alert_class }}"><p>{{ prediction_text }}</p></div>{% endif %}
         <form action="/predict" method="POST">
             <input type="hidden" name="current_scenario" value="{{ active_scenario }}">
-            
-            <!-- SCENARIO 1 -->
             {% if active_scenario == 'scenario1' or not active_scenario %}
             <div class="section-block">
                 <h3 class="section-title">Personal Details</h3>
                 <div class="input-grid">
-                    <div class="input-group"><label>Age Bracket</label><select name="age"><option value="25">18 - 25 Years</option><option value="35" selected>26 - 45 Years</option><option value="55">46 - 60 Years</option></select></div>
-                    <div class="input-group"><label>Gender</label><select name="gender"><option value="Female">Female</option><option value="Male" selected>Male</option></select></div>
-                    <div class="input-group"><label>Education</label><select name="education_level"><option value="Under Graduate">Under Graduate / Student</option><option value="Graduate" selected>Graduate Degree</option><option value="Post Graduate">Post Graduate</option></select></div>
-                    <div class="input-group"><label>How will you clear your card bills?</label><select name="card_type"><option value="Regular" selected>Using my monthly job salary slip</option><option value="Secured">Using a Fixed Deposit (FD) savings locker account</option></select></div>
-                    <div class="input-group"><label>Marital Status</label><select name="marital_status"><option value="Single" selected>Single</option><option value="Married">Married</option></select></div>
+                    <div class="input-group"><label>Age Bracket</label><select name="age">
+                        <option value="25" {% if form_data.age == '25' %}selected{% endif %}>18 - 25 Years</option>
+                        <option value="35" {% if form_data.age == '35' or not form_data.age %}selected{% endif %}>26 - 45 Years</option>
+                        <option value="55" {% if form_data.age == '55' %}selected{% endif %}>46 - 60 Years</option>
+                    </select></div>
+                    <div class="input-group"><label>Gender</label><select name="gender">
+                        <option value="Female" {% if form_data.gender == 'Female' %}selected{% endif %}>Female</option>
+                        <option value="Male" {% if form_data.gender == 'Male' or not form_data.gender %}selected{% endif %}>Male</option>
+                    </select></div>
+                    <div class="input-group"><label>Education</label><select name="education_level">
+                        <option value="Under Graduate" {% if form_data.education_level == 'Under Graduate' %}selected{% endif %}>Under Graduate / Student</option>
+                        <option value="Graduate" {% if form_data.education_level == 'Graduate' or not form_data.education_level %}selected{% endif %}>Graduate Degree</option>
+                        <option value="Post Graduate" {% if form_data.education_level == 'Post Graduate' %}selected{% endif %}>Post Graduate</option>
+                    </select></div>
+                    <div class="input-group"><label>How will you clear your card bills?</label><select name="card_type">
+                        <option value="Regular" {% if form_data.card_type == 'Regular' or not form_data.card_type %}selected{% endif %}>Using my monthly job salary slip</option>
+                        <option value="Secured" {% if form_data.card_type == 'Secured' %}selected{% endif %}>Using a Fixed Deposit (FD) savings locker account</option>
+                    </select></div>
+                    <div class="input-group"><label>Marital Status</label><select name="marital_status">
+                        <option value="Single" {% if form_data.marital_status == 'Single' or not form_data.marital_status %}selected{% endif %}>Single</option>
+                        <option value="Married" {% if form_data.marital_status == 'Married' %}selected{% endif %}>Married</option>
+                    </select></div>
                 </div>
             </div>
             <div class="section-block">
                 <h3 class="section-title">Financial Profile</h3>
                 <div class="input-grid">
-                    <div class="input-group"><label>Net Monthly Income (Rs)</label><input type="number" name="monthly_income" value="50000" placeholder="e.g. 50000" required min="0"></div>
-                    <div class="input-group"><label>Total Monthly EMIs / Debits (Rs)</label><input type="number" name="existing_loans_emi" value="12000" placeholder="e.g. 12000" required min="0"></div>
-                    <div class="input-group"><label>Estimated CIBIL</label><select name="cibil_score"><option value="800" selected>Excellent (750+)</option><option value="700">Good (680-749)</option><option value="600">Average (600-679)</option><option value="400">Poor (<600)</option></select></div>
-                    <div class="input-group"><label>City Category</label><select name="city_tier"><option value="Tier-1" selected>Tier-1 Metro City</option><option value="Tier-2">Tier-2 Urban City</option></select></div>
+                    <div class="input-group"><label>Net Monthly Income (Rs)</label><input type="number" name="monthly_income" value="{{ form_data.monthly_income | default('50000') }}" required min="0"></div>
+                    <div class="input-group"><label>Total Monthly EMIs / Debits (Rs)</label><input type="number" name="existing_loans_emi" value="{{ form_data.existing_loans_emi | default('12000') }}" required min="0"></div>
+                    <div class="input-group"><label>Estimated CIBIL</label><select name="cibil_score">
+                        <option value="800" {% if form_data.cibil_score == '800' or not form_data.cibil_score %}selected{% endif %}>Excellent (750+)</option>
+                        <option value="700" {% if form_data.cibil_score == '700' %}selected{% endif %}>Good (680-749)</option>
+                        <option value="600" {% if form_data.cibil_score == '600' %}selected{% endif %}>Average (600-679)</option>
+                        <option value="400" {% if form_data.cibil_score == '400' %}selected{% endif %}>Poor (<600)</option>
+                    </select></div>
+                    <div class="input-group"><label>City Category</label><select name="city_tier">
+                        <option value="Tier-1" {% if form_data.city_tier == 'Tier-1' or not form_data.city_tier %}selected{% endif %}>Tier-1 Metro City</option>
+                        <option value="Tier-2" {% if form_data.city_tier == 'Tier-2' %}selected{% endif %}>Tier-2 Urban City</option>
+                    </select></div>
                 </div>
             </div>
             {% endif %}
-
-            <!-- SCENARIO 2 -->
             {% if active_scenario == 'scenario2' %}
             <div class="section-block">
                 <h3 class="section-title">Bank Analyst Verification Dashboard</h3>
                 <div class="input-grid">
-                    <div class="input-group"><label>Employment Status</label><select name="employment_type"><option value="Salaried" selected>Salaried Employee</option><option value="Self Employed">Self-Employed</option></select></div>
-                    <div class="input-group"><label>Work Experience Stability</label><select name="employment_duration"><option value="2.5">1 to 3 Years</option><option value="5.5">3 to 7 Years</option><option value="10.0" selected>More than 7 Years</option></select></div>
-                    <div class="input-group"><label>Official Bureau Fetch CIBIL Score</label><select name="cibil_score"><option value="800" selected>Verified Prime Profile (750+ Score)</option><option value="550">Verified High Risk Profile (Below 680 Score)</option></select></div>
-                    <div class="input-group"><label>Verified Monthly Salary (Rs)</label><input type="number" name="monthly_income" value="65000" placeholder="e.g. 65000" required min="0"></div>
+                    <div class="input-group"><label>Employment Status</label><select name="employment_type">
+                        <option value="Salaried" {% if form_data.employment_type == 'Salaried' or not form_data.employment_type %}selected{% endif %}>Salaried Employee</option>
+                        <option value="Self Employed" {% if form_data.employment_type == 'Self Employed' %}selected{% endif %}>Self-Employed</option>
+                    </select></div>
+                    <div class="input-group"><label>Work Experience Stability</label><select name="employment_duration">
+                        <option value="2.5" {% if form_data.employment_duration == '2.5' %}selected{% endif %}>1 to 3 Years</option>
+                        <option value="5.5" {% if form_data.employment_duration == '5.5' %}selected{% endif %}>3 to 7 Years</option>
+                        <option value="10.0" {% if form_data.employment_duration == '10.0' or not form_data.employment_duration %}selected{% endif %}>More than 7 Years</option>
+                    </select></div>
+                    <div class="input-group"><label>Official Bureau Fetch CIBIL Score</label><select name="cibil_score">
+                        <option value="800" {% if form_data.cibil_score == '800' or not form_data.cibil_score %}selected{% endif %}>Verified Prime Profile (750+ Score)</option>
+                        <option value="550" {% if form_data.cibil_score == '550' %}selected{% endif %}>Verified High Risk Profile (Below 680 Score)</option>
+                    </select></div>
+                    <div class="input-group"><label>Verified Monthly Salary (Rs)</label><input type="number" name="monthly_income" value="{{ form_data.monthly_income | default('65000') }}" required min="0"></div>
                 </div>
             </div>
             {% endif %}
 
-            <!-- SCENARIO 3 -->
             {% if active_scenario == 'scenario3' %}
             <div class="section-block">
                 <h3 class="section-title">Compliance Auditing & Fraud Control</h3>
                 <div class="input-grid">
-                    <div class="input-group"><label>PAN Card Status</label><select name="pan_status"><option value="Valid" selected>Valid & KYC Verified</option><option value="Invalid">Invalid PAN Flagged</option></select></div>
-                    <div class="input-group"><label>Past Defaults History</label><select name="previous_defaults"><option value="No" selected>No Overdue Defaults (Clean Track)</option><option value="Yes">Yes, Late Payments Found</option></select></div>
-                    <div class="input-group"><label>Bureau CIBIL Feed</label><select name="cibil_score"><option value="750" selected>Pass Score (750+)</option><option value="600">Alert Score (<650)</option></select></div>
-                    <div class="input-group"><label>Declared Monthly Income (Rs)</label><input type="number" name="monthly_income" value="55000" placeholder="e.g. 55000" required min="0"></div>
+                    <div class="input-group"><label>PAN Card Status</label><select name="pan_status">
+                        <option value="Valid" {% if form_data.pan_status == 'Valid' or not form_data.pan_status %}selected{% endif %}>Valid & KYC Verified</option>
+                        <option value="Invalid" {% if form_data.pan_status == 'Invalid' %}selected{% endif %}>Invalid PAN Flagged</option>
+                    </select></div>
+                    <div class="input-group"><label>Past Defaults History</label><select name="previous_defaults">
+                        <option value="No" {% if form_data.previous_defaults == 'No' or not form_data.previous_defaults %}selected{% endif %}>No Overdue Defaults (Clean Track)</option>
+                        <option value="Yes" {% if form_data.previous_defaults == 'Yes' %}selected{% endif %}>Yes, Late Payments Found</option>
+                    </select></div>
+                    <div class="input-group"><label>Bureau CIBIL Feed</label><select name="cibil_score">
+                        <option value="750" {% if form_data.cibil_score == '750' or not form_data.cibil_score %}selected{% endif %}>Pass Score (750+)</option>
+                        <option value="600" {% if form_data.cibil_score == '600' %}selected{% endif %}>Alert Score (<650)</option>
+                    </select></div>
+                    <div class="input-group"><label>Declared Monthly Income (Rs)</label><input type="number" name="monthly_income" value="{{ form_data.monthly_income | default('55000') }}" required min="0"></div>
                 </div>
             </div>
             {% endif %}
-
             <div class="button-container"><button type="submit" class="st-button">Execute Model Inference</button></div>
         </form>
     </div>
