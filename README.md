@@ -12,19 +12,13 @@ Run this command from the project root folder to install all necessary Python da
 pip install Flask numpy scikit-learn xgboost pandas
 ```
 
-### 2. Move Into the Phase 5 App Directory
-Navigate into the active application folder:
+### 2. Move Into the Phase 5 App Directory & Launch the Server Engine
+Navigate into the active application folder & Execute the main server controller script to launch the Flask framework local loop:
 ```bash
-cd "5. Project Development Phase"
+cd "5. Project Development Phase" && python3 app.py
 ```
 
-### 3. Launch the Server Engine
-Execute the main server controller script to launch the Flask framework local loop:
-```bash
-python3 app.py
-```
-
-### 4. Open in Your Browser
+### 3. Open in Your Browser
 Once the terminal reads `Running on http://127.0.0.1:5000`, open your web browser and navigate to:
 ```text
 http://127.0.0.1:5000
